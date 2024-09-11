@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typcursus - Level Pad</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            background-image: url('space_background.png'); /* Voeg je achtergrond toe */
+            background-size: cover;
+            color: white;
+        }
+
+        .level {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+            background-color: grey;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            transition: background-color 0.3s;
+        }
+
+        .level.unlocked {
+            background-color: gold;
+        }
+
+        .level.locked {
+            background-color: #555;
+        }
+
+        .path {
+            position: relative;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 90%;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        #level-info {
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="path">
+    <div class="level unlocked" onclick="goToLevel(1)">1</div>
+    <div class="level locked" onclick="goToLevel(2)">2</div>
+    <div class="level locked" onclick="goToLevel(3)">3</div>
+    <div class="level locked" onclick="goToLevel(4)">4</div>
+</div>
+
+<div id="level-info"></div>
+
+<script>
+    let userProgress = 1; // Voorbeeld: gebruiker heeft level 1 voltooid
+
+    function updateLevels() {
+        const levels = document.querySelectorAll('.level');
+        levels.forEach((level, index) => {
+            if (index < userProgress) {
+                level.classList.add('unlocked');
+                level.classList.remove('locked');
+            }
+        });
+    }
+
+    function goToLevel(level) {
+        const levelInfo = document.getElementById('level-info');
+        if (level <= userProgress) {
+            levelInfo.textContent = 'Level ' + level + ' starten...';
+            // Hier kan je naar het gekozen level gaan, bijv. via een URL
+        } else {
+            levelInfo.textContent = 'Level ' + level + ' is nog vergrendeld!';
+        }
+    }
+
+    window.onload = updateLevels;
+</script>
+
+</body>
+</html>
